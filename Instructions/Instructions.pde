@@ -20,7 +20,7 @@ int[]turn3 = {60, 5, 30, 10};
 int[]turn = turn2;
 String playerName = "washino";
 //定数，基本的にINTERVALは300，MEASUREMENT_TIMEは30，ADJUSTMENTは260 ADJUSTMENTとは1番最初の測定を5分待つの馬鹿らしいから測定の時間の10秒前から始めるための定数
-final int INTERVAL = 60;
+final int INTERVAL = 300;
 final int MEASUREMENT_TIME = 30;
 final int ADJUSTMENT =INTERVAL-MEASUREMENT_TIME-10;
 /////////////////////////////////////////////////
@@ -41,7 +41,7 @@ Serial myPort;
 
 ControlP5 cp5;
 JLayeredPane pane;
-JTextField[] jt = new JTextField[12];
+JTextField[] jt = new JTextField[9];
 String[]input_before = {"", "", "", "", "", "", "", "", ""};
 String[]input_after = {"", "", "", "", "", "", "", "", ""};
 String[]title = {"測定1回目", "測定2回目", "測定3回目", "測定4回目", "測定5回目", "測定6回目", "測定7回目", "測定8回目", "測定9回目"};
@@ -111,7 +111,7 @@ void draw() {
   time = (hour()*3600 + minute()*60 + second()) - start_time;
   int temp_time = time % INTERVAL; //インターバルとの差の時間
   int remaining_time = INTERVAL - temp_time; //次のステップに行くまでの時間
-  for (int i=0; i<12; i++) {
+  for (int i=0; i<9; i++) {
     if (input_before[i] == "") {
       text("口に入れる前のワッテの重量を"+ "\r\n" + title[i] + "に記入してください", 400, 350);
       watte = false;
@@ -169,7 +169,6 @@ void draw() {
   //text("残り"+ (String.valueOf(time)), 600, 500);
   boolean temp_flag;
   temp_flag = false;
-  println(time);
   for (int i= 0; i < 4; i++) {
     temp_time = (INTERVAL * (2 + (i*2))-MEASUREMENT_TIME);
     if (turn[i] == 60) {
@@ -186,8 +185,6 @@ void draw() {
       }
     } else {
       if (time > temp_time&&(time < temp_time + turn[i])) {
-        println(temp_time);
-        //println(temp_time);
         temp_flag = true;
         if (odor == "OFF") {
           myPort.write('1');
@@ -208,11 +205,11 @@ void draw() {
   }
   if (!(input_after[8] == "")) {
     if (!final_flag) {
-      for (int i=0; i<2; i++) {
+      for (int i=0; i<3; i++) {
         output.print(turn[i]);
         output.print(",");
       }
-      output.println(turn[2]);
+      output.println(turn[3]);
       for (int i=0; i<9; i++) {
         output.print(input_before[i]);
         output.print(",");
@@ -303,32 +300,5 @@ void enter9() {
   } else {
     input_after[8] = jt[8].getText();
     jt[8].setText("");
-  }
-}
-void enter10() {
-  if (input_before[9] == "") {
-    input_before[9] = jt[9].getText();
-    jt[9].setText("");
-  } else {
-    input_after[9] = jt[9].getText();
-    jt[9].setText("");
-  }
-}
-void enter11() {
-  if (input_before[10] == "") {
-    input_before[10] = jt[10].getText();
-    jt[10].setText("");
-  } else {
-    input_after[10] = jt[10].getText();
-    jt[10].setText("");
-  }
-}
-void enter12() {
-  if (input_before[11] == "") {
-    input_before[11] = jt[11].getText();
-    jt[11].setText("");
-  } else {
-    input_after[11] = jt[11].getText();
-    jt[11].setText("");
   }
 }
