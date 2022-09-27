@@ -32,9 +32,9 @@ def main():
         result_list.append(df['after']-df['before'])
     player_num = len(csv_list) 
     make_linegraph_1part(result_list, player_num, turn_list, title_list)
-    make_linegraph_4part(result_list, player_num, turn_list, title_list)
-    make_bargraph(result_list, player_num, turn_list, title_list) 
-    make_average_linegraph(result_list, player_num, turn_list, title_list)
+    # make_linegraph_4part(result_list, player_num, turn_list, title_list)
+    # make_bargraph(result_list, player_num, turn_list, title_list) 
+    # make_average_linegraph(result_list, player_num, turn_list, title_list)
 
 def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     #result_listは1列の表示するグラフ，player_numはプレイヤーの人数，turu_listはにおいを噴射した時間，title_listはタイトル名
@@ -42,8 +42,10 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     fig_1part = plt.figure()
     subplot_area = []
     x = ['0', '5', '10', '15', '20', '25', '30', '35', '40']
-    separete = player_num // 3 + 1
+    separete = player_num // 3 + 2
     # subplot_area.append(fig_1part.add_subplot(separete, separete, i+1))
+    turn1 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    turn2 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
     for i in range(player_num):
@@ -81,7 +83,32 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
         # subplot_area[i].legend(loc = 'upper right')
         subplot_area[i].set_ylim(0, 0.65)
         plt.tick_params(labelsize=5)
+        if(odor_time[0] == 5.0):
+            for i in range(9):
+                turn1[i] += y[i]
+        else:
+            for i in range(9):
+                turn2[i] += y[i]
+
+    for i in range(9):
+        turn1[i] = turn1[i]/player_num*2
+        turn2[i] = turn2[i]/player_num*2
     
+    marker = [5, 10, 30, 60]
+
+    subplot_area.append(fig_1part.add_subplot(3, separete, player_num + 1))
+    for i in range(4):
+        subplot_area[player_num].text(1 + i*2 ,turn1[2 + 2*i], marker[i], fontsize=5)
+    subplot_area[player_num].plot(x, turn1, lw=1)
+    subplot_area[player_num].set_title("turn1")
+    subplot_area[player_num].set_ylim(0, 0.65)
+
+    subplot_area.append(fig_1part.add_subplot(3, separete,  player_num + 2))
+    for i in range(4):
+        subplot_area[player_num+1].text(1 + i*2 ,turn2[2 + 2*i], marker[3 - i], fontsize=5)
+    subplot_area[player_num+1].plot(x, turn2, lw=1)
+    subplot_area[player_num+1].set_title("turn2")
+    subplot_area[player_num+1].set_ylim(0, 0.65)
     plt.tight_layout()
     plt.show()
 
