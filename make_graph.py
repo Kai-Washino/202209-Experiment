@@ -32,9 +32,9 @@ def main():
         result_list.append(df['after']-df['before'])
     player_num = len(csv_list) 
     make_linegraph_1part(result_list, player_num, turn_list, title_list)
-    # make_linegraph_4part(result_list, player_num, turn_list, title_list)
-    # make_bargraph(result_list, player_num, turn_list, title_list) 
-    # make_average_linegraph(result_list, player_num, turn_list, title_list)
+    make_linegraph_4part(result_list, player_num, turn_list, title_list)
+    make_bargraph(result_list, player_num, turn_list, title_list) 
+    make_average_linegraph(result_list, player_num, turn_list, title_list)
 
 def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     #result_listは1列の表示するグラフ，player_numはプレイヤーの人数，turu_listはにおいを噴射した時間，title_listはタイトル名
@@ -46,6 +46,8 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     # subplot_area.append(fig_1part.add_subplot(separete, separete, i+1))
     turn1 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     turn2 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    turn3 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    turn4 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
     for i in range(player_num):
@@ -59,7 +61,7 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
         for j in range(4):
             odor_time.append(turn_list[i].at[0,j])
 
-        print(odor_time)
+        # print(odor_time)
         marker_name = ['','','','']
         for j in range(4):
             if(odor_time[j] == 60.0):
@@ -73,7 +75,7 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
             else:
                 marker_name[j] = "No"
             subplot_area[i].text(1 + j*2 ,y[2 + 2*j], marker_name[j], fontsize=5)
-        print(marker_name)
+        # print(marker_name)
 
         subplot_area[i].plot(x, y, lw=1)
         subplot_area[i].set_title(title_list[i])
@@ -83,18 +85,26 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
         # subplot_area[i].legend(loc = 'upper right')
         subplot_area[i].set_ylim(0, 0.65)
         plt.tick_params(labelsize=5)
+        print(odor_time[0])
         if(odor_time[0] == 5.0):
             for i in range(9):
                 turn1[i] += y[i]
-        else:
+        elif(odor_time[0] == 60.0):
             for i in range(9):
                 turn2[i] += y[i]
+        elif(odor_time[0] == 10.0):
+            for i in range(9):
+                turn3[i] += y[i]
+        else:
+            for i in range(9):
+                turn4[i] += y[i]
 
     for i in range(9):
         turn1[i] = turn1[i]/player_num*2
         turn2[i] = turn2[i]/player_num*2
     
     marker = [5, 10, 30, 60]
+    marker2 = [10, 60, 5, 30]
 
     subplot_area.append(fig_1part.add_subplot(3, separete, player_num + 1))
     for i in range(4):
@@ -109,6 +119,20 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     subplot_area[player_num+1].plot(x, turn2, lw=1)
     subplot_area[player_num+1].set_title("turn2")
     subplot_area[player_num+1].set_ylim(0, 0.65)
+
+    subplot_area.append(fig_1part.add_subplot(3, separete,  player_num + 3))
+    for i in range(4):
+        subplot_area[player_num+2].text(1 + i*2 ,turn3[2 + 2*i], marker2[i], fontsize=5)
+    subplot_area[player_num+2].plot(x, turn3, lw=1)
+    subplot_area[player_num+2].set_title("turn3")
+    subplot_area[player_num+2].set_ylim(0, 0.65)
+
+    subplot_area.append(fig_1part.add_subplot(3, separete,  player_num + 4))
+    for i in range(4):
+        subplot_area[player_num+3].text(1 + i*2 ,turn4[2 + 2*i], marker2[3 - i], fontsize=5)
+    subplot_area[player_num+3].plot(x, turn4, lw=1)
+    subplot_area[player_num+3].set_title("turn4")
+    subplot_area[player_num+3].set_ylim(0, 0.65)
     plt.tight_layout()
     plt.show()
 
@@ -118,10 +142,12 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     x = ['0', '5', '10']
     average_turn1 = [0, 0, 0],[0, 0, 0],[0, 0, 0],[0, 0, 0]
     average_turn2 = [0, 0, 0],[0, 0, 0],[0, 0, 0],[0, 0, 0]
+    average_turn3 = [0, 0, 0],[0, 0, 0],[0, 0, 0],[0, 0, 0]
+    average_turn4 = [0, 0, 0],[0, 0, 0],[0, 0, 0],[0, 0, 0]
     average_all = [0, 0, 0],[0, 0, 0],[0, 0, 0],[0, 0, 0]
     fig_3part = plt.figure()
     subplot_area = []
-    separete = player_num // 3 + 2
+    separete = player_num // 3 + 3
     for i in range(player_num):
         subplot_area.append(fig_3part.add_subplot(3, separete, i+1))
         y1 = []
@@ -168,7 +194,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
                 average_turn1[1][i] =+ y2[i]
                 average_turn1[2][i] =+ y3[i]
                 average_turn1[3][i] =+ y4[i]
-        if(odor_time[0] == 60.0):
+        elif(odor_time[0] == 60.0):
             for i in range(3):
                 average_all[3][i] =+ y1[i]
                 average_all[2][i] =+ y2[i]
@@ -178,6 +204,26 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
                 average_turn2[1][i] =+ y2[i]
                 average_turn2[2][i] =+ y3[i]
                 average_turn2[3][i] =+ y4[i]
+        elif(odor_time[0] == 10.0):
+            for i in range(3):
+                average_all[1][i] =+ y1[i]
+                average_all[3][i] =+ y2[i]
+                average_all[0][i] =+ y3[i]
+                average_all[2][i] =+ y4[i]
+                average_turn3[0][i] =+ y1[i]
+                average_turn3[1][i] =+ y2[i]
+                average_turn3[2][i] =+ y3[i]
+                average_turn3[3][i] =+ y4[i]
+        else:
+            for i in range(3):
+                average_all[2][i] =+ y1[i]
+                average_all[0][i] =+ y2[i]
+                average_all[3][i] =+ y3[i]
+                average_all[1][i] =+ y4[i]
+                average_turn4[0][i] =+ y1[i]
+                average_turn4[1][i] =+ y2[i]
+                average_turn4[2][i] =+ y3[i]
+                average_turn4[3][i] =+ y4[i]
     
     subplot_area.append(fig_3part.add_subplot(3, separete, player_num+1))
     subplot_area[player_num].plot(x, average_all[0], label = "5.0", color = "red", lw =1)
@@ -201,7 +247,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     subplot_area[player_num+1].legend(loc = 'upper right')
     subplot_area[player_num+1].set_ylim(0, 0.65)
 
-    subplot_area.append(fig_3part.add_subplot(3, separete, player_num+2+1))
+    subplot_area.append(fig_3part.add_subplot(3, separete, player_num+3+1))
     subplot_area[player_num+2].plot(x, average_turn2[3], label = "5.0", color = "red", lw =1)
     subplot_area[player_num+2].plot(x, average_turn2[2], label = "10.0", color = "blue", lw =1)
     subplot_area[player_num+2].plot(x, average_turn2[1], label = "30.0", color = "green", lw =1)
@@ -211,6 +257,29 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     subplot_area[player_num+2].set_ylabel('saliva volume [g]')
     subplot_area[player_num+2].legend(loc = 'upper right')
     subplot_area[player_num+2].set_ylim(0, 0.65)
+
+    subplot_area.append(fig_3part.add_subplot(3, separete, player_num+4+1))
+    subplot_area[player_num+3].plot(x, average_turn3[2], label = "5.0", color = "red", lw =1)
+    subplot_area[player_num+3].plot(x, average_turn3[0], label = "10.0", color = "blue", lw =1)
+    subplot_area[player_num+3].plot(x, average_turn3[3], label = "30.0", color = "green", lw =1)
+    subplot_area[player_num+3].plot(x, average_turn3[1], label = "60.0", color = "pink", lw =1)
+    subplot_area[player_num+3].set_title("turn3 average")
+    subplot_area[player_num+3].set_xlabel('time [minutes]')
+    subplot_area[player_num+3].set_ylabel('saliva volume [g]')
+    subplot_area[player_num+3].legend(loc = 'upper right')
+    subplot_area[player_num+3].set_ylim(0, 0.65)
+
+    subplot_area.append(fig_3part.add_subplot(3, separete, player_num+5+1))
+    subplot_area[player_num+4].plot(x, average_turn4[1], label = "5.0", color = "red", lw =1)
+    subplot_area[player_num+4].plot(x, average_turn4[3], label = "10.0", color = "blue", lw =1)
+    subplot_area[player_num+4].plot(x, average_turn4[0], label = "30.0", color = "green", lw =1)
+    subplot_area[player_num+4].plot(x, average_turn4[2], label = "60.0", color = "pink", lw =1)
+    subplot_area[player_num+4].set_title("turn4 average")
+    subplot_area[player_num+4].set_xlabel('time [minutes]')
+    subplot_area[player_num+4].set_ylabel('saliva volume [g]')
+    subplot_area[player_num+4].legend(loc = 'upper right')
+    subplot_area[player_num+4].set_ylim(0, 0.65)
+
     plt.tight_layout()
     plt.show()
 
