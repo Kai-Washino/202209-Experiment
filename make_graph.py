@@ -57,7 +57,7 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
         y = []
         for j in range(9):
             y.append(result_list[i].iloc[j])
-            print(result_list[i].iloc[j])
+            # print(result_list[i].iloc[j])
         odor_time = []
         for j in range(4):
             odor_time.append(turn_list[i].at[0,j])
@@ -86,22 +86,22 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
         subplot_area[i].set_ylim(0, 0.65)
         plt.tick_params(labelsize=5)
         if(odor_time[0] == 5.0):
-            print("5")
+            # print("5")
             for i in range(9):
                 turn1[i] += y[i]
                 all_average[i] += y[i]
         elif(odor_time[0] == 60.0):
-            print("60")
+            # print("60")
             for i in range(9):
                 turn2[i] += y[i]
                 all_average[i] += y[i]
         elif(odor_time[0] == 10.0):
-            print("10")
+            # print("10")
             for i in range(9):
                 turn3[i] += y[i]
                 all_average[i] += y[i]
         else:
-            print("30")
+            # print("30")
             for i in range(9):
                 turn4[i] += y[i]
                 all_average[i] += y[i]
@@ -149,16 +149,19 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
 
     plt.rcParams["font.size"] = 15
     plt.rcParams['pdf.fonttype'] = 42
-    plt.rcParams['font.family'] = 'Meiryo'
-    plt.xlabel('時間 [分]', fontname='Meiryo', fontsize=20)
-    plt.ylabel('唾液分泌量 [g]', fontname='Meiryo', fontsize=20)
-    plt.ylim(0, 0.6)
+    plt.rcParams['font.family'] = 'Yu Gothic'
+    plt.xlabel('時間 [分]', fontname='Yu Gothic', fontsize=17)
+    plt.ylabel('唾液分泌量 [g]', fontname='Yu Gothic', fontsize=17)
+    plt.ylim(0, 0.7)
     plt.plot(x, turn1, lw=2, label = "5-10-30-60群")
     plt.plot(x, turn2, lw=2, label = "60-30-10-5群")
     plt.plot(x, turn3, lw=2, label = "10-60-5-30群")
     plt.plot(x, turn4, lw=2, label = "30-5-60-10群")
     plt.plot(x, all_average, lw=2, label = "全ての群の平均")
-    plt.legend(loc = 'upper left')
+    plt.legend(loc = 'upper right')
+    addP(plt, 3.5, 0.37, 3.5, 0.03, "*")
+    addP(plt, 4.5, 0.36, 2.5, 0.02, "")
+    plt.text(0, 0.65, "* : p < 0.05", fontname='Yu Gothic', fontsize=17)
     plt.tight_layout()
     plt.show()
 
@@ -278,7 +281,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
             average_turn1[i][j] = average_turn1[i][j]/3
             average_turn2[i][j] = average_turn2[i][j]/3
             average_turn3[i][j] = average_turn3[i][j]/3
-            average_turn4[i][j] = average_turn4[i][j]/2
+            average_turn4[i][j] = average_turn4[i][j]/3
     
     subplot_area.append(fig_3part.add_subplot(3, separete, player_num+1))
     subplot_area[player_num].plot(x, average_all[0], label = "5.0", color = "red", lw =1)
@@ -388,7 +391,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     for i in range(3): 
         data[i] = average_all[0][i], average_all[1][i], average_all[2][i], average_all[3][i]
     err = [sem5_before, sem10_before, sem30_before, sem60_before], [sem5_now, sem10_now, sem30_now, sem60_now], [sem5_after, sem10_after, sem30_after, sem60_after]
-    label = ["におい噴射の5分前", "におい噴射の直後", "におい噴射の5分後"]
+    label = ["におい噴射の5分前", "におい噴射中", "におい噴射の5分後"]
 
     #前だけいる場合
     data = [0, 0]
@@ -396,23 +399,23 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     for i in range(2): 
         data[i] = average_all[0][i], average_all[1][i], average_all[2][i], average_all[3][i]
     err = [sem5_before, sem10_before, sem30_before, sem60_before], [sem5_now, sem10_now, sem30_now, sem60_now]
-    label = ["におい噴射の5分前", "におい噴射の直後"]
+    label = ["におい噴射の5分前", "におい噴射中"]
     
     for i, h in enumerate(data):
         pos = x - totoal_width *( 1- (2*i+1)/len(data))/2
         plt.bar(pos, h, label = label[i], width = totoal_width/len(data), yerr=err[i], capsize=10)
 
     plt.rcParams['pdf.fonttype'] = 42
-    plt.rcParams['font.family'] = 'Meiryo'
-    plt.xticks(x, labels, fontname='Meiryo', fontsize=15)
-    plt.yticks(fontname='Meiryo', fontsize=15)
-    plt.xlabel('においの噴射時間', fontname='Meiryo', fontsize=20)
-    plt.ylabel('唾液分泌量 [g]', fontname='Meiryo', fontsize=20)
-    plt.legend(loc = 'upper right', prop={"family":"Meiryo"})
+    plt.rcParams['font.family'] = 'Yu Gothic'
+    plt.xticks(x, labels, fontname='Yu Gothic', fontsize=17)
+    plt.yticks(fontname='Yu Gothic', fontsize=17)
+    plt.xlabel('においの噴射時間', fontname='Yu Gothic', fontsize=17)
+    plt.ylabel('唾液分泌量 [g]', fontname='Yu Gothic', fontsize=17)
+    plt.legend(loc = 'upper right', prop={"family":"Yu Gothic"})
     #検定結果表示
-    addP(plt, 2, 0.3, 0.2, 0.02, "**")
-    addP(plt, 4, 0.3, 0.2, 0.02, "*")
-    plt.text(0.5, 0.48, "* : p < 0.05   ** : p < 0.01", fontname='Meiryo', fontsize=10)
+    addP(plt, 2, 0.35, 0.2, 0.02, "**")
+    addP(plt, 4, 0.35, 0.2, 0.02, "*")
+    plt.text(0.5, 0.46, "* : p < 0.05   ** : p < 0.01", fontname='Yu Gothic', fontsize=17)
 
     plt.ylim(bottom=0, top=0.5)
     plt.tight_layout()
@@ -422,60 +425,76 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
 
     #検定用
     output = sec60_list
-    for i in range(player_num):
-        print(output[i][0])
-        print(output[i][1])
+    # for i in range(player_num):
+        # print(output[i][0])
+        # print(output[i][1])
         # print(output[i][2])
 
 
 def make_bargraph(result_list, player_num, turn_list, title_list):
     # relative_list_before2nowは1つ前からにおい噴射の変化量，relative_list_before2afterは1つ前からにおい噴射後の変化量
     plt.rcParams["font.size"] = 5
-    relative_list_before2now = []
-    relative_list_before2after = []
-    relative_list_now2after = []
-    absolute_list = []
+    relative_list_before2now = [[0 for i in range(5)] for j in range(player_num)]
+    relative_list_before2after= [[0 for i in range(5)] for j in range(player_num)]
+    relative_list_now2after= [[0 for i in range(5)] for j in range(player_num)]
+    absolute_list= [[0 for i in range(5)] for j in range(player_num)]
     error5 = []
     error10 = []
     error30 = []
     error60 = []
     
-
+    turn1 = 0
+    turn2 = 0
+    turn3 = 0
+    turn4 = 0
     for i in range(player_num):
         y = []
-        relative_list_before2now.append([title_list[i], 0, 0, 0, 0])
-        relative_list_before2after.append([title_list[i], 0, 0, 0, 0])
-        relative_list_now2after.append([title_list[i], 0, 0, 0, 0])
-        absolute_list.append([title_list[i], 0, 0, 0, 0])
         for j in range(9):
             y.append(result_list[i].iloc[j])
+        print(turn_list[i].at[0,0])
+        if(turn_list[i].at[0,0] == 5.0):
+            graph_list = 0 + turn1
+            turn1 += 1
+        elif(turn_list[i].at[0,0] == 30.0):
+            graph_list = 3 + turn2
+            turn2 += 1
+        elif(turn_list[i].at[0,0] == 60.0):
+            graph_list = 6 + turn3
+            turn3 += 1
+        else:
+            graph_list = 9 + turn4
+            turn4 += 1
+        print(graph_list)
 
         odor_time = []
         for j in range(4):
             odor_time.append(turn_list[i].at[0,j])
 
-         
+        relative_list_before2now[graph_list][0] = title_list[i]
+        relative_list_before2after[graph_list][0] = title_list[i]
+        relative_list_now2after[graph_list][0] = title_list[i]
+        absolute_list[graph_list][0] = title_list[i]
         for j in range(4):
             if(odor_time[j] == 5.0):
-                relative_list_before2now[i][1] = y[1 + 2*j] - y[2*j]
-                relative_list_before2after[i][1] = y[2 + 2*j] - y[2*j]
-                relative_list_now2after[i][1] = y[2 + 2*j] - y[1+2*j]
-                absolute_list[i][1] = y[1 + 2*j]
+                relative_list_before2now[graph_list][1] = y[1 + 2*j] - y[2*j]
+                relative_list_before2after[graph_list][1] = y[2 + 2*j] - y[2*j]
+                relative_list_now2after[graph_list][1] = y[2 + 2*j] - y[1+2*j]
+                absolute_list[graph_list][1] = y[1 + 2*j]
             elif(odor_time[j] == 10.0):
-                relative_list_before2now[i][2] = y[1 + 2*j] - y[2*j]
-                relative_list_before2after[i][2] = y[2 + 2*j] - y[2*j]
-                relative_list_now2after[i][2] = y[2 + 2*j] - y[1+2*j]
-                absolute_list[i][2] = y[1 + 2*j]
+                relative_list_before2now[graph_list][2] = y[1 + 2*j] - y[2*j]
+                relative_list_before2after[graph_list][2] = y[2 + 2*j] - y[2*j]
+                relative_list_now2after[graph_list][2] = y[2 + 2*j] - y[1+2*j]
+                absolute_list[graph_list][2] = y[1 + 2*j]
             elif(odor_time[j] == 30.0):
-                relative_list_before2now[i][3] = y[1 + 2*j] - y[2*j]
-                relative_list_before2after[i][3] = y[2 + 2*j] - y[2*j]
-                relative_list_now2after[i][3] = y[2 + 2*j] - y[1+2*j]
-                absolute_list[i][3] = y[1 + 2*j]
+                relative_list_before2now[graph_list][3] = y[1 + 2*j] - y[2*j]
+                relative_list_before2after[graph_list][3] = y[2 + 2*j] - y[2*j]
+                relative_list_now2after[graph_list][3] = y[2 + 2*j] - y[1+2*j]
+                absolute_list[graph_list][3] = y[1 + 2*j]
             else:
-                relative_list_before2now[i][4] = y[1 + 2*j] - y[2*j]
-                relative_list_before2after[i][4] = y[2 + 2*j] - y[2*j]
-                relative_list_now2after[i][4] = y[2 + 2*j] - y[1+2*j]
-                absolute_list[i][4] = y[1 + 2*j]
+                relative_list_before2now[graph_list][4] = y[1 + 2*j] - y[2*j]
+                relative_list_before2after[graph_list][4] = y[2 + 2*j] - y[2*j]
+                relative_list_now2after[graph_list][4] = y[2 + 2*j] - y[1+2*j]
+                absolute_list[graph_list][4] = y[1 + 2*j]
     
     x = np.array([1, 2, 3, 4])
     labels = ['5秒', '10秒', '30秒', '60秒']
@@ -485,20 +504,20 @@ def make_bargraph(result_list, player_num, turn_list, title_list):
     average_list = [0, 0, 0, 0]
 
     # data_list = absolute_list #絶対値
-    data_list = relative_list_before2now #におい噴射直後と直前の変化量
-    # data_list = relative_list_before2after #におい噴射直後の次と直前の変化量
-    # data_list = relative_list_now2after #におい噴射直後と直後の次の変化量
+    data_list = relative_list_before2now #におい噴射中と直前の変化量
+    # data_list = relative_list_before2after #におい噴射中の次と直前の変化量
+    # data_list = relative_list_now2after #におい噴射中と直後の次の変化量
 
-    name_anonymous = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ,"k"]
+    name_anonymous = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J" ,"K", "L"]
     for i in range(player_num):
         temp_data = data_list[i]
         name = temp_data.pop(0)
 
         #検定用
-        print(temp_data[0])
-        print(temp_data[1])
-        print(temp_data[2])
-        print(temp_data[3])
+        # print(temp_data[0])
+        # print(temp_data[1])
+        # print(temp_data[2])
+        # print(temp_data[3])
         error5.append(temp_data[0])
         error10.append(temp_data[1])
         error30.append(temp_data[2])
@@ -513,20 +532,21 @@ def make_bargraph(result_list, player_num, turn_list, title_list):
             average_list[j] = average_list[j] + temp_data[j]
 
     plt.rcParams['pdf.fonttype'] = 42
-    plt.rcParams["font.family"] = 'Meiryo'   # 使用するフォント
+    plt.rcParams["font.family"] = 'Yu Gothic'   # 使用するフォント
     plt.rcParams["font.size"] = 15                 # 文字の大きさ
 
-    plt.xticks(x, labels, fontname='Meiryo', fontsize=20)
+    plt.xticks(x, labels, fontname='Yu Gothic', fontsize=17)
     # print(average_list)
-    plt.yticks(fontname='Meiryo', fontsize=20)
-    plt.xlabel('においの噴射時間', fontname='Meiryo', fontsize=20)
-    plt.ylabel('唾液分泌量の変化量 [g]', fontname='Meiryo', fontsize=20)
-    plt.text(1, average_list[0]/player_num, '-',horizontalalignment="center", fontname='Meiryo', fontsize=15)
-    plt.text(2, average_list[1]/player_num, '-',horizontalalignment="center", fontname='Meiryo', fontsize=15)
-    plt.text(3, average_list[2]/player_num, '-',horizontalalignment="center", fontname='Meiryo', fontsize=15)
-    plt.text(4, average_list[3]/player_num, '-',horizontalalignment="center", fontname='Meiryo', fontsize=15)
-    plt.text(0.5, 0.45, '- : 平均値', fontname='Meiryo', fontsize=15)
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, prop={"family":"Meiryo"})
+    plt.yticks(fontname='Yu Gothic', fontsize=17)
+    plt.xlabel('においの噴射時間', fontname='Yu Gothic', fontsize=17)
+    plt.ylabel('唾液分泌量の変化量 [g]', fontname='Yu Gothic', fontsize=17)
+    plt.text(1, average_list[0]/player_num, '-',horizontalalignment="center", fontname='Yu Gothic', fontsize=17)
+    plt.text(2, average_list[1]/player_num, '-',horizontalalignment="center", fontname='Yu Gothic', fontsize=17)
+    plt.text(3, average_list[2]/player_num, '-',horizontalalignment="center", fontname='Yu Gothic', fontsize=17)
+    plt.text(4, average_list[3]/player_num, '-',horizontalalignment="center", fontname='Yu Gothic', fontsize=17)
+    plt.text(0.5, 0.45, '- : 平均値', fontname='Yu Gothic', fontsize=17)
+    print(average_list[2]/player_num)
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, prop={"family":"Yu Gothic"})
     plt.ylim(bottom=-0.18, top=0.5)
     # plt.legend(loc = 'upper right')
     plt.tight_layout()
@@ -543,17 +563,17 @@ def make_bargraph(result_list, player_num, turn_list, title_list):
     sem30 = pd.Series(error30).sem()
     sem60 = pd.Series(error60).sem()
     err = sem5, sem10, sem30, sem60
-    print(err)
+    # print(err)
     x = np.array([1, 2, 3, 4])
 
     for i in range(4):
         plt.bar(i+1, average_list[i]/player_num, width = totoal_width, yerr=err[i], capsize=10)
     plt.rcParams['pdf.fonttype'] = 42
-    plt.rcParams['font.family'] = 'Meiryo'
-    plt.xticks(x, labels, fontname='Meiryo', fontsize=15)
-    plt.yticks(fontname='Meiryo', fontsize=15)
-    plt.xlabel('においの噴射時間', fontname='Meiryo', fontsize=20)
-    plt.ylabel('唾液分泌量の変化量 [g]', fontname='Meiryo', fontsize=20)
+    plt.rcParams['font.family'] = 'Yu Gothic'
+    plt.xticks(x, labels, fontname='Yu Gothic', fontsize=17)
+    plt.yticks(fontname='Yu Gothic', fontsize=17)
+    plt.xlabel('においの噴射時間', fontname='Yu Gothic', fontsize=17)
+    plt.ylabel('唾液分泌量の変化量 [g]', fontname='Yu Gothic', fontsize=17)
     plt.ylim(bottom=-0.05, top=0.2)
     plt.tight_layout()
     plt.show()  
