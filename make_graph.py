@@ -82,7 +82,7 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
 
         # subplot_area[i].set_xlabel('time [minutes]')
         # subplot_area[i].set_ylabel('saliva volume [g]')
-        # subplot_area[i].legend(loc = 'upper right')
+        # subplot_area[i].legend(frameon=False, loc = 'upper right')
         subplot_area[i].set_ylim(0, 0.65)
         plt.tick_params(labelsize=5)
         if(odor_time[0] == 5.0):
@@ -158,7 +158,7 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     plt.plot(x, turn3, lw=2, label = "10-60-5-30群")
     plt.plot(x, turn4, lw=2, label = "30-5-60-10群")
     plt.plot(x, all_average, lw=2, label = "全ての群の平均")
-    plt.legend(loc = 'upper right')
+    plt.legend(loc = 'upper right', frameon=False)
     addP(plt, 3.5, 0.40, 3.5, 0.06, "*")
     addP(plt, 4.5, 0.36, 2.5, 0.02, "*")
     plt.text(0, 0.70, "* : p < 0.05", fontname='Yu Gothic', fontsize=17)
@@ -216,7 +216,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
         subplot_area[i].set_title(title_list[i])
         subplot_area[i].set_xlabel('time [minutes]')
         subplot_area[i].set_ylabel('saliva volume [g]')
-        subplot_area[i].legend(loc = 'upper right')
+        subplot_area[i].legend(frameon=False, loc = 'upper right')
         subplot_area[i].set_ylim(0, 0.65)
         if(odor_time[0] == 5.0):
             sec5_list.append(y1)
@@ -291,7 +291,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     subplot_area[player_num].set_title("all_average average")
     subplot_area[player_num].set_xlabel('time [minutes]')
     subplot_area[player_num].set_ylabel('saliva volume [g]')
-    subplot_area[player_num].legend(loc = 'upper right')
+    subplot_area[player_num].legend(loc = 'upper right', frameon=False)
     subplot_area[player_num].set_ylim(0, 0.65)
 
     subplot_area.append(fig_3part.add_subplot(3, separete, player_num+1+1))
@@ -302,7 +302,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     subplot_area[player_num+1].set_title("turn1 average")
     subplot_area[player_num+1].set_xlabel('time [minutes]')
     subplot_area[player_num+1].set_ylabel('saliva volume [g]')
-    subplot_area[player_num+1].legend(loc = 'upper right')
+    subplot_area[player_num+1].legend(loc = 'upper right', frameon=False)
     subplot_area[player_num+1].set_ylim(0, 0.65)
 
     subplot_area.append(fig_3part.add_subplot(3, separete, player_num+3+1))
@@ -313,7 +313,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     subplot_area[player_num+2].set_title("turn2 average")
     subplot_area[player_num+2].set_xlabel('time [minutes]')
     subplot_area[player_num+2].set_ylabel('saliva volume [g]')
-    subplot_area[player_num+2].legend(loc = 'upper right')
+    subplot_area[player_num+2].legend(loc = 'upper right', frameon=False)
     subplot_area[player_num+2].set_ylim(0, 0.65)
 
     subplot_area.append(fig_3part.add_subplot(3, separete, player_num+4+1))
@@ -335,7 +335,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     subplot_area[player_num+4].set_title("turn4 average")
     subplot_area[player_num+4].set_xlabel('time [minutes]')
     subplot_area[player_num+4].set_ylabel('saliva volume [g]')
-    subplot_area[player_num+4].legend(loc = 'upper right')
+    subplot_area[player_num+4].legend(frameon=False, loc = 'upper right')
     subplot_area[player_num+4].set_ylim(0, 0.65)
 
     plt.tight_layout()
@@ -411,11 +411,11 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     plt.yticks(fontname='Yu Gothic', fontsize=17)
     plt.xlabel('においの噴射時間', fontname='Yu Gothic', fontsize=17)
     plt.ylabel('唾液分泌量 [g]', fontname='Yu Gothic', fontsize=17)
-    plt.legend(loc = 'upper right', prop={"family":"Yu Gothic"})
+    plt.legend(frameon=False, loc = 'upper right', prop={"family":"Yu Gothic"})
     #検定結果表示
     addP(plt, 2, 0.35, 0.2, 0.02, "**")
     addP(plt, 4, 0.35, 0.2, 0.02, "*")
-    plt.text(0.5, 0.46, "* : p < 0.05   ** : p < 0.01", fontname='Yu Gothic', fontsize=17)
+    plt.text(0.5, 0.445, "* : p < 0.05   ** : p < 0.01", fontname='Yu Gothic', fontsize=17)
 
     plt.ylim(bottom=0, top=0.5)
     plt.tight_layout()
@@ -546,9 +546,9 @@ def make_bargraph(result_list, player_num, turn_list, title_list):
     plt.text(4, average_list[3]/player_num, '-',horizontalalignment="center", fontname='Yu Gothic', fontsize=30)
     plt.text(0.5, 0.45, '- : 平均値', fontname='Yu Gothic', fontsize=17)
     print(average_list[2]/player_num)
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, prop={"family":"Yu Gothic"})
+    plt.legend(frameon=False, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, prop={"family":"Yu Gothic"})
     plt.ylim(bottom=-0.18, top=0.5)
-    # plt.legend(loc = 'upper right')
+    # plt.legend(frameon=False, loc = 'upper right')
     plt.tight_layout()
     plt.show()
 
@@ -598,7 +598,7 @@ def make_average_linegraph(result_list, player_num, turn_list, title_list):
     # print(average_list)
 
     plt.plot(x, y, lw=1)
-    plt.legend(loc = 'upper right')
+    plt.legend(frameon=False, loc = 'upper right')
     plt.show()
 
 
@@ -606,7 +606,7 @@ def addP(plt, p_xplace, p_yplace, p_width, p_height, p_text):
     plt.plot([p_xplace-p_width, p_xplace + p_width],[p_yplace, p_yplace], color="black")
     plt.plot([p_xplace-p_width, p_xplace-p_width],[p_yplace, p_yplace - p_height], color="black")
     plt.plot([p_xplace + p_width, p_xplace + p_width],[p_yplace, p_yplace - p_height], color="black")
-    plt.text(p_xplace, p_yplace-0.01, p_text, horizontalalignment="center")
+    plt.text(p_xplace, p_yplace, p_text, horizontalalignment="center")
     
 
 if __name__ == '__main__':
