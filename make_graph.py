@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import glob
+from matplotlib import patches
 
 def main():
     path = "C:\\Users\\S2\\Documents\\実験\\2022年度9月 唾液分泌\\result"
@@ -32,10 +33,10 @@ def main():
         result_list.append(df['after']-df['before'])
     player_num = len(csv_list) 
 
-    make_linegraph_1part(result_list, player_num, turn_list, title_list)
+    # make_linegraph_1part(result_list, player_num, turn_list, title_list)
     make_linegraph_4part(result_list, player_num, turn_list, title_list)
-    make_bargraph(result_list, player_num, turn_list, title_list) 
-    make_average_linegraph(result_list, player_num, turn_list, title_list)
+    # make_bargraph(result_list, player_num, turn_list, title_list) 
+    # make_average_linegraph(result_list, player_num, turn_list, title_list)
 
 def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     #result_listは1列の表示するグラフ，player_numはプレイヤーの人数，turu_listはにおいを噴射した時間，title_listはタイトル名
@@ -421,8 +422,60 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
     plt.tight_layout()
     plt.show()  
 
-    
+    #UWW2022用のグラフ作成
+    plt.rcParams["font.size"] = 25
+    data_UWW = [[0, 0], [0, 0], [0, 0], [0, 0]]
+    err_UWW = [sem5_before, sem5_now,], [sem10_before, sem10_now], [sem30_before, sem30_now],[sem60_before, sem60_now]
+    for i in range(4):
+        for j in range(2):
+            data_UWW[i][j] = average_all[i][j]
+    print(data_UWW)
+    subplot_cnt = [141, 142, 143, 144]
+    title_name = ["(a) 5秒間","(b) 10秒間", "(c) 30秒間", "(d) 60秒間"]
+    label = ["噴射5分前", "噴射中"]
+    for i in range(4):
+        plt.subplot(subplot_cnt[i])
+        plt.ylim(0,0.5)
+        plt.bar(label, data_UWW[i], yerr=err_UWW[i], capsize=10, color = ["darkturquoise", "tomato"])
+        if(i == 0):
+            plt.ylabel('唾液分泌量 [g]', fontname='Yu Gothic', fontsize=25)
+            plt.tick_params(labelbottom=False)
+        elif(i == 1):
+            addP(plt, 0.5, 0.35, 0.5, 0.02, "**")
+            plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
+        elif(i == 2):
+            plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
+        else:
+            addP(plt, 0.5, 0.35, 0.5, 0.02, "*")
+            plt.legend(frameon=False, loc = 'upper right', prop={"family":"Yu Gothic"})
+            plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
+        plt.title(title_name[i], y=-0.15, fontsize=25)
+        
+    plt.text(-10, 0.52, "* : p < 0.05   ** : p < 0.01", fontname='Yu Gothic', fontsize=25)
+    box1 = {
+        'facecolor' : 'darkturquoise',
+        'edgecolor' : 'black',
+        'boxstyle' : 'square, pad=0.8',
+        'linewidth' : 0
+    }
+    box2 = {
+        'facecolor' : 'tomato',
+        'edgecolor' : 'none',
+        'boxstyle' : 'square, pad=1',
+        'linewidth' : 0
+    }
+    x = -1
+    y = 0.6
+    plt.text(x=x, y=y, s ='          ', bbox=box1, fontsize='8')
+    plt.text(x=x+0.61, y=y-0.015, s= label[0], fontname='Yu Gothic', fontsize=25)
+    plt.text(x=x, y=y-0.06, s ='          ', bbox=box2, fontsize='8')
+    plt.text(x=x+0.61, y=y-0.075, s= label[1], fontname='Yu Gothic', fontsize=25)
 
+    plt.subplots_adjust(left=0.15, right=0.95, bottom=0.1, top=0.8)
+    #     bbox=box2)
+    plt.show()
+    plt.rcParams["font.size"] = 17
+ 
     #検定用
     output = sec60_list
     # for i in range(player_num):
