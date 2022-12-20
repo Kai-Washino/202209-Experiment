@@ -33,8 +33,8 @@ def main():
         result_list.append(df['after']-df['before'])
     player_num = len(csv_list) 
 
-    # make_linegraph_1part(result_list, player_num, turn_list, title_list)
-    make_linegraph_4part(result_list, player_num, turn_list, title_list)
+    make_linegraph_1part(result_list, player_num, turn_list, title_list)
+    # make_linegraph_4part(result_list, player_num, turn_list, title_list)
     # make_bargraph(result_list, player_num, turn_list, title_list) 
     # make_average_linegraph(result_list, player_num, turn_list, title_list)
 
@@ -152,17 +152,28 @@ def make_linegraph_1part(result_list, player_num, turn_list, title_list):
     plt.rcParams['pdf.fonttype'] = 42
     plt.rcParams['font.family'] = 'Yu Gothic'
     plt.xlabel('時間 [分]', fontname='Yu Gothic', fontsize=17)
-    plt.ylabel('唾液分泌量 [g]', fontname='Yu Gothic', fontsize=17)
-    plt.ylim(0, 0.75)
-    plt.plot(x, turn1, lw=2, label = "5-10-30-60群")
-    plt.plot(x, turn2, lw=2, label = "60-30-10-5群")
-    plt.plot(x, turn3, lw=2, label = "10-60-5-30群")
-    plt.plot(x, turn4, lw=2, label = "30-5-60-10群")
-    plt.plot(x, all_average, lw=2, label = "全ての群の平均")
-    plt.legend(loc = 'upper right', frameon=False)
+    plt.ylabel('唾液分泌量 [g]', fontname='Yu Gothic', fontsize=17)    
+
+    ######### 群ごとにわける#############################
+    # plt.plot(x, turn1, lw=2, label = "5-10-30-60群")
+    # plt.plot(x, turn2, lw=2, label = "60-30-10-5群")
+    # plt.plot(x, turn3, lw=2, label = "10-60-5-30群")
+    # plt.plot(x, turn4, lw=2, label = "30-5-60-10群")
+    # plt.plot(x, all_average, lw=2, label = "全ての群の平均")plt.legend(loc = 'upper right', frameon=False)
+    # plt.ylim(0, 0.75)
+    # addP(plt, 3.5, 0.40, 3.5, 0.06, "*")
+    # addP(plt, 4.5, 0.36, 2.5, 0.02, "*")
+    # plt.text(0, 0.70, "* : p < 0.05", fontname='Yu Gothic', fontsize=17)
+
+    ######### 群ごとにわけない###########################
+    plt.plot(x, all_average, lw=2)
+    plt.ylim(0, 0.55)
     addP(plt, 3.5, 0.40, 3.5, 0.06, "*")
     addP(plt, 4.5, 0.36, 2.5, 0.02, "*")
-    plt.text(0, 0.70, "* : p < 0.05", fontname='Yu Gothic', fontsize=17)
+    plt.text(0, 0.50, "* : p < 0.05", fontname='Yu Gothic', fontsize=17)
+    ####################################################
+    
+    
     plt.tight_layout()
     plt.show()
 
@@ -451,7 +462,7 @@ def make_linegraph_4part(result_list, player_num, turn_list, title_list):
             plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
         plt.title(title_name[i], y=-0.15, fontsize=25)
         
-    plt.text(-10, 0.52, "* : p < 0.05   ** : p < 0.01", fontname='Yu Gothic', fontsize=25)
+    plt.text(-8, 0.52, "* : p < 0.05   ** : p < 0.01", fontname='Yu Gothic', fontsize=25)
     box1 = {
         'facecolor' : 'darkturquoise',
         'edgecolor' : 'black',
